@@ -2,6 +2,7 @@ package api.demo.Controller;
 
 
 import api.demo.Model.*;
+import api.demo.Model.Type.PromotionType;
 import api.demo.Service.*;
 import lombok.Data;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -28,10 +29,8 @@ public class FillWithData {
     @ResponseBody
     public String generateShops() {
         addShops();
-        addShopItems();
         addPromotions();
         addProducers();
-        addProducts();
         return "Przykładowe dane zostały wygenerowane i zapisane w bazie";
     }
 
@@ -47,31 +46,29 @@ public class FillWithData {
         }
         return shopService.getShops();
     }
-    private List<ShopItem> addShopItems() {
-        for (int i = 0; i < 20; i++) {
-            shopItemService.addShopItem(new ShopItem());
-        }
-        return shopItemService.getShopItems();
-    }
 
     private List<Promotion> addPromotions() {
-        for (int i = 0; i < 2; i++) {
-            promotionService.addPromotion(new Promotion());
+        List<String> promotions = new ArrayList<>(List.of(
+                "Promocja 1",
+                "Promocja 2"
+        ));
+        for (String s : promotions) {
+            promotionService.addPromotion(new Promotion(s, PromotionType.BASIC, 10));
         }
         return promotionService.getPromotions();
     }
     private List<Producer> addProducers() {
-        for (int i = 0; i < 10; i++) {
-            producerService.addProducer(new Producer());
+        List<String> producers = new ArrayList<>(List.of(
+                "Producent 1",
+                "Producent 2",
+                "Producent 3"
+        ));
+        for (String s : producers) {
+            producerService.addProducer(new Producer(s));
         }
         return producerService.getProducers();
     }
-    private List<Product> addProducts() {
-        for (int i = 0; i < 10; i++) {
-            productService.addProduct(new Product());
-        }
-        return productService.getProducts();
-    }
+
 
 
 

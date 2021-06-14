@@ -19,4 +19,10 @@ public class ShopItemService {
     public void addShopItem(ShopItem shopItem) {
         shopItemRepository.save(shopItem);
     }
+    public void deleteShopItem(Long id){
+        shopItemRepository.deleteShopItemById(id);
+    }
+    public ShopItem getShopItemById(Long id){
+        return shopItemRepository.getShopItemById(id);
+    }
 }

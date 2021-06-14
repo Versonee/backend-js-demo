@@ -1,6 +1,7 @@
 package api.demo.Model;
 
 import lombok.AllArgsConstructor;
+import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.Entity;
@@ -9,6 +10,7 @@ import javax.persistence.OneToOne;
 import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
+@Data
 @Entity
 public class ShopItem extends BasicModel {
     public float price;

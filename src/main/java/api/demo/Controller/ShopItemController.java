@@ -13,6 +13,7 @@ import lombok.Data;
 import org.springframework.data.repository.query.Param;
 import org.springframework.web.bind.annotation.*;
 
+import javax.transaction.Transactional;
 import java.util.Collections;
 import java.util.List;
 
@@ -44,7 +45,26 @@ public class ShopItemController {
     @RequestMapping("/search")
     @ResponseBody
     public List<ShopItem> search(@RequestParam("price") int n) {
-        System.out.println(n);
         return shopItemService.getShopItems();
+    }
+
+    @Transactional
+    @DeleteMapping("/delete-shop-item/{id}")
+    @ResponseBody
+    public void deleteShopItem(@PathVariable Long id) {
+        shopItemService.deleteShopItem(id);
+    }
+
+    @Transactional
+    @PutMapping("/update-shop-item/{id}")
+    @ResponseBody
+    public void updateShopItem(@PathVariable Long id, @RequestBody ShopItemRequestModel model) {
+        ShopItem item = shopItemService.getShopItemById(id);
+        item.setAvailable(model.available);
+        item.setPrice(model.price);
+        item.setProduct(model.product);
+        item.setShop(model.shop);
+        item.setPromotion(model.promotion);
+        shopItemService.addShopItem(item);
     }
 }
